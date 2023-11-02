@@ -20,4 +20,18 @@ public class IBANTest {
         IBAN classUnderTest = new IBAN(myIBAN);
         assertFalse(classUnderTest.check(myIBAN));
     }
+
+    @Test void test_getKontoNummer(){
+        String myIBAN = "DE68210501700012345678";
+        IBAN classUnderTest = new IBAN(myIBAN);
+        String kontonummer = "12345678";
+        assertEquals(kontonummer, classUnderTest.getKontoNummer());
+    }
+
+    @Test void test_getBLZ(){
+        String myIBAN = "DE68210501700012345678";
+        IBAN classUnderTest = new IBAN(myIBAN);
+        String blz = "2105017";
+        assertEquals(blz, classUnderTest.getBLZ());
+    }
 }

@@ -19,7 +19,8 @@ public class IBAN {
             return false;
         }
 
-        if(!IBANnumber.substring(0,1).equalsIgnoreCase("DE")){
+        String countryCode = IBANnumber.substring(0,2);
+        if(!countryCode.equalsIgnoreCase("DE")){
            return false;
         }
         //System.out.println(IBANnumber);
@@ -67,10 +68,32 @@ public class IBAN {
         IBANnumberBigInt = IBANnumberBigInt.mod(modulo);
         //System.out.println(IBANnumberBigInt);
 
-        if(IBANnumberBigInt.intValue() == 1) {
-            return true;
-        } else {
-            return false;
+        return IBANnumberBigInt.intValue() == 1;
+    }
+
+    public String getKontoNummer(){
+        this.IBANnumber = this.IBANnumber.replaceAll("\\s+", "").toUpperCase();
+
+        if (check(this.IBANnumber)) {
+            int kontonummerStartIndex = this.IBANnumber.length() - 10; // Nehme die letzten 10 Zeichen
+
+            if (kontonummerStartIndex >= 0) {
+                String kontonummer = this.IBANnumber.substring(kontonummerStartIndex);
+                kontonummer = kontonummer.replaceFirst("^0+(?!$)", "");
+                return kontonummer;
+            }
         }
+        return null;
+    }
+
+    public String getBLZ(){
+        this.IBANnumber = this.IBANnumber.replaceAll("\\s+", "").toUpperCase();
+
+        if (check(this.IBANnumber)) {
+                String blz = this.IBANnumber.substring(4, 13);
+                blz = blz.replaceAll("0+$", "");
+                return blz;
+            }
+        return null;
     }
 }
